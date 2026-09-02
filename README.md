@@ -1,8 +1,16 @@
 # AVR32DB28 Drivers for P0
+A deliberately plain driver set for the AVR32DB28, written for the P0 hardware development hat.
 
-A deliberately plain driver set for the AVR32DB28, written for students on an embedded engineering
-course. Everything a student needs is in the header: ordinary C functions, no registers, no bit
-masks and no pointers. The register work lives in the `.c` files, commented for anyone curious.
+Students design the hat themselves in *Tillämpad elektronik och hållbar utveckling*, and then
+learn to code on it in *Programmeringsmetodik*, where these drivers are what they build on. That
+is what the drivers are for: while learning to code, the interesting part is the program rather
+than the hardware, so everything a student needs is in the header:
+* Ordinary C functions.
+* No registers.
+* No bit masks.
+* No pointers. 
+
+Registers and the rest of the hardware detail come in the programming course after this one; until then the register work lives in the `.c` files, commented for anyone curious.
 
 ---
 
@@ -11,6 +19,9 @@ masks and no pointers. The register work lives in the `.c` files, commented for 
 | Peripheral     | Header                                                         | Status    |
 | -------------- | -------------------------------------------------------------- | --------- |
 | Digital output | [include/driver/digital_out.h](./include/driver/digital_out.h) | Available |
+
+**[docs/drivers.md](./docs/drivers.md) describes every function in this header**, together with
+the hardware behind it.
 
 The pins are named after the port they sit on: `PC0` - `PC3`, `PD1` - `PD7`, `PF0` - `PF1` and
 `PA0` - `PA7`. Each one has its own pair of functions, so nothing has to be passed as an argument:
@@ -151,6 +162,11 @@ avrdude -c serialupdi -p avr32db28 -P COM3 -b 115200 -U flash:w:build/main.hex:i
 
 ## Toolchain
 
+Building from the terminal needs `avr-gcc`, `avrdude` and `clang-format` on `PATH`.
+**[docs/toolchain.md](./docs/toolchain.md) installs them step by step**, on Windows in Git Bash
+as well as on Linux, and lists what each `make` target actually uses. The short version, on Linux
+or WSL:
+
 ```bash
 sudo apt -y update
 sudo apt -y install gcc-avr binutils-avr avr-libc avrdude g++ clang-format
@@ -165,7 +181,8 @@ wget http://packs.download.atmel.com/Atmel.AVR-Dx_DFP.1.10.114.atpack
 unzip -q -d dfp Atmel.AVR-Dx_DFP.1.10.114.atpack
 ```
 
-The build looks in `dfp/` by default; set `DFP_DIR` to use a pack from elsewhere.
+The build looks in `dfp/` first, then in a local Microchip Studio installation, which it finds by
+itself if Studio is installed. Set `DFP_DIR` to point at a pack somewhere else.
 
 ---
 
@@ -176,6 +193,8 @@ main.c                            Application entry point
 Makefile                          Targets for building, testing and formatting
 libavr32db28-p0.atsln             Microchip Studio solution, opening the project below
 libavr32db28-p0.cproj             Microchip Studio project, building the firmware
+docs/drivers.md                   Driver reference, i.e. every function described in full
+docs/toolchain.md                 Installing avr-gcc, avrdude and clang-format for the terminal build
 
 include/driver/digital_out.h      Driver API for digital outputs, i.e. what students use
 source/driver/digital_out.c       Driver implementation details, i.e. the register access
