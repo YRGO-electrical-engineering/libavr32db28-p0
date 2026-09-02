@@ -1,18 +1,5 @@
 /**
  * @brief Mocked hardware platform for AVR32DB28.
- *
- *        The AVR Dx peripherals are accessed as struct members (PORTC.OUTSET, PORTF.IN), so the
- *        mock simply declares the same struct types and provides real instances in RAM. Driver
- *        code therefore compiles unchanged against the mock.
- *
- *        The mock is plain storage: writing PORTC.OUTSET does not propagate into PORTC.OUT the
- *        way silicon does. Tests assert on the register the driver actually wrote, for example
- *        EXPECT_EQ(PORTC.OUTSET, PIN0_bm).
- *
- *        Register layouts follow ioavr32db28.h, reduced to the registers the drivers use. The
- *        mock is not address-mapped, so reserved padding is omitted and leaving out a register
- *        no driver touches is harmless. Add peripherals, registers and bit masks here as new
- *        drivers need them.
  */
 #ifdef TESTSUITE
 

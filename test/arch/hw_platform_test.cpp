@@ -1,14 +1,9 @@
 /**
  * @brief Tests for the mocked hardware platform.
- *
- *        These verify the test wiring itself: that the C mock links into the C++ test binary,
- *        that the peripheral instances are writable, that testHwPlatformReset clears them, and
- *        that delay_ms is recorded rather than actually waited out.
  */
 #include <cstdint>
 
 #include "arch/avr/hw_platform.h"
-
 #include "yrgo/test/test.h"
 
 namespace
